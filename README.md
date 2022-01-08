@@ -7,7 +7,7 @@ Models used:
 
 - Camera OV2460
 - Bluetooth HC-06
-- VGA display screen 480P60Hz
+- VGA display screen 480P 60Hz
 - SD Card with SPI proxy
 
 Designed functions:
@@ -24,9 +24,6 @@ Unsolved problems:
 
 Hope that someone who solved the problem can contact me or pull an issue. Thanks a lot :)
 
+
+
 Reference Repository: <a herf="https://github.com/lllbbbyyy/FPGA-OV2640">FPGA-OV2640 </a>
-
-*我们的bygg真是太强辣！
-
-
-
