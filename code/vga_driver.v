@@ -6,26 +6,27 @@ module vga_driver(
     output      [11:0]  vga_rgb         ,
     output              data_req        ,
     input       [11:0]  pixel_data      ,
+    input               camera_show_mode,
     output reg  [18:0]  pixel_addr
 );                             
                                                         
     /**************************************************************
-        ²ÎÊý¶¨Òå
+        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ***************************************************************/ 
-    parameter  H_SYNC   =  10'd96   ;   //ÐÐÍ¬²½
-    parameter  H_BACK   =  10'd48   ;   //ÐÐÏÔÊ¾ºóÑØ
-    parameter  H_DISP   =  10'd640  ;   //ÐÐÓÐÐ§Êý¾Ý
-    parameter  H_FRONT  =  10'd16   ;   //ÐÐÏÔÊ¾Ç°ÑØ
-    parameter  H_TOTAL  =  10'd800  ;   //ÐÐÉ¨ÃèÖÜÆÚ
+    parameter  H_SYNC   =  10'd96   ;   //ï¿½ï¿½Í¬ï¿½ï¿½
+    parameter  H_BACK   =  10'd48   ;   //ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+    parameter  H_DISP   =  10'd640  ;   //ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½
+    parameter  H_FRONT  =  10'd16   ;   //ï¿½ï¿½ï¿½ï¿½Ê¾Ç°ï¿½ï¿½
+    parameter  H_TOTAL  =  10'd800  ;   //ï¿½ï¿½É¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    parameter  V_SYNC   =  10'd2    ;   //³¡Í¬²½
-    parameter  V_BACK   =  10'd33   ;   //³¡ÏÔÊ¾ºóÑØ
-    parameter  V_DISP   =  10'd480  ;   //³¡ÓÐÐ§Êý¾Ý
-    parameter  V_FRONT  =  10'd10   ;   //³¡ÏÔÊ¾Ç°ÑØ
-    parameter  V_TOTAL  =  10'd525  ;   //³¡É¨ÃèÖÜÆÚ
+    parameter  V_SYNC   =  10'd2    ;   //ï¿½ï¿½Í¬ï¿½ï¿½
+    parameter  V_BACK   =  10'd33   ;   //ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+    parameter  V_DISP   =  10'd480  ;   //ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½
+    parameter  V_FRONT  =  10'd10   ;   //ï¿½ï¿½ï¿½ï¿½Ê¾Ç°ï¿½ï¿½
+    parameter  V_TOTAL  =  10'd525  ;   //ï¿½ï¿½É¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             
     /**************************************************************
-        ÏßÍøÓë¼Ä´æÆ÷¶¨Òå
+        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ***************************************************************/                                  
     reg  [9:0]          hsync_cnt       ;
     reg  [9:0]          vsync_cnt       ;
@@ -34,20 +35,20 @@ module vga_driver(
 
 
     /**************************************************************
-        ÏßÍøÁ¬½Ó
+        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ***************************************************************/    
-    assign vga_hs  = (hsync_cnt <= H_SYNC - 1'b1) ? 1'b0 : 1'b1;    //ÐÐÍ¬²½ÐÅºÅ
-    assign vga_vs  = (vsync_cnt <= V_SYNC - 1'b1) ? 1'b0 : 1'b1;    //³¡Í¬²½ÐÅºÅ
+    assign vga_hs  = (hsync_cnt <= H_SYNC - 1'b1) ? 1'b0 : 1'b1;    //ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Åºï¿½
+    assign vga_vs  = (vsync_cnt <= V_SYNC - 1'b1) ? 1'b0 : 1'b1;    //ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Åºï¿½
     assign vga_en  = (((hsync_cnt >= H_SYNC+H_BACK) && (hsync_cnt < H_SYNC+H_BACK+H_DISP))
                     &&((vsync_cnt >= V_SYNC+V_BACK) && (vsync_cnt < V_SYNC+V_BACK+V_DISP)))
-                    ?  1'b1 : 1'b0;                                 //VGAÊä³öÐÅºÅ           
-    assign vga_rgb = vga_en ? pixel_data : 12'd0;                   //RGB444Êä³öÐÅºÅ
+                    ?  1'b1 : 1'b0;                                 //VGAï¿½ï¿½ï¿½ï¿½Åºï¿½           
+    assign vga_rgb = vga_en ? ((camera_show_mode &(hsync_cnt == 357 || hsync_cnt == 570 || vsync_cnt == 195 || vsync_cnt == 355)) ? 12'hfff : pixel_data) : 12'd0;                   //RGB444ï¿½ï¿½ï¿½ï¿½Åºï¿½
     assign data_req = (((hsync_cnt >= H_SYNC+H_BACK-1'b1) && (hsync_cnt < H_SYNC+H_BACK+H_DISP-1'b1))
                     && ((vsync_cnt >= V_SYNC+V_BACK) && (vsync_cnt < V_SYNC+V_BACK+V_DISP)))
-                    ?  1'b1 : 1'b0;                                 //ÏñËØµãÇëÇóÐÅºÅ
+                    ?  1'b1 : 1'b0;                                 //ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½
 
     /**************************************************************
-        ÏñËØµãµØÖ·ÐÅºÅ
+        ï¿½ï¿½ï¿½Øµï¿½ï¿½Ö·ï¿½Åºï¿½
     ***************************************************************/                
     always @(posedge vga_clk or negedge sys_rst_n) begin
         if (!sys_rst_n)
@@ -59,7 +60,7 @@ module vga_driver(
     end
 
     /**************************************************************
-        ÐÐÍ¬²½¼ÆÊýÆ÷
+        ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ***************************************************************/  
     always @(posedge vga_clk or negedge sys_rst_n) begin         
         if (!sys_rst_n)
@@ -73,7 +74,7 @@ module vga_driver(
     end
 
     /**************************************************************
-        ³¡Í¬²½¼ÆÊýÆ÷
+        ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ***************************************************************/  
     always @(posedge vga_clk or negedge sys_rst_n) begin         
         if (!sys_rst_n)

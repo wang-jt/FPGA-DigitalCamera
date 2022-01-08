@@ -6,6 +6,7 @@ module ov2640_sccb_cfg_init(
     output              reset       ,
     output              pwdn        ,
     output              xclk        ,
+    input      [3:0]    bright      ,
     output              camera_init_done
 );
 
@@ -32,7 +33,8 @@ module ov2640_sccb_cfg_init(
         .rst            (rst)           ,
         .data_out       (data_send)     ,
         .cfg_ok         (cfg_ok)        ,
-        .sccb_ok        (sccb_ok)
+        .sccb_ok        (sccb_ok)       ,
+        .bright         (bright)        
     );
 
     /**************************************************************

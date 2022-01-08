@@ -143,6 +143,7 @@ module camera_top(
         .pwdn               (camera_pwdn)           ,  
         .rst                (sys_rst)               ,
         .camera_init_done   (camera_init_done)      ,
+        .bright             (key[3:0])              ,
         .xclk               (camera_xclk)
     );
 
@@ -187,7 +188,8 @@ module camera_top(
         .pixel_addr         (rd_addr)               ,
         .vga_hs             (vga_hsync)             ,
         .vga_vs             (vga_vsync)             ,
-        .vga_rgb            (vga_rgb)            
+        .vga_rgb            (vga_rgb)               ,
+        .camera_show_mode   (camera_show_mode)
     );
 
     

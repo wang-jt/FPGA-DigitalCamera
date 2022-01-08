@@ -3,12 +3,19 @@ module ov2460_sccb_cfg(
     input               rst             ,
     output reg [15:0]   data_out        ,
     output              cfg_ok          ,//配置写入完毕会拉高
-    input               sccb_ok
+    input               sccb_ok         ,
+    input      [3:0]    bright          
 );
+    //亮度设置
+    //0:(0X00)-2
+    //1:(0X10)-1
+    //2,(0X20) 0
+    //3,(0X30)+1
+    //4,(0X40)+2
     /**************************************************************
         参数配置
     ***************************************************************/
-    parameter cfg_number=176;
+    parameter cfg_number=181;
     
     /**************************************************************
         寄存器定义
@@ -388,5 +395,15 @@ module ov2460_sccb_cfg(
     data_out <= 16'hDD7F;
     8'hB0 :
     data_out <= 16'h0500;
+    8'hB1 :
+    data_out <= 16'hFF00;
+    8'hB2 :
+    data_out <= 16'h7C00;
+    8'hBA3 :
+    data_out <= 16'h7D04;
+    8'hB4 :
+    data_out <= 16'h7C09;
+    8'hB5 :
+    data_out <= {8'h7D, bright ,4'h0};
     endcase
 endmodule
