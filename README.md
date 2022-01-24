@@ -3,13 +3,13 @@ Final Project for Digitial Logic, CS102109, Tongji University.
 
 Example Pictures:
 - Capture Mode
-![拍摄模式](demo\拍摄模式.jpg)
+![拍摄模式](demo/拍摄模式.jpg)
 - Display Mode (Imported photo)
-![电脑照片输入](demo\电脑照片输入.jpg)
+![电脑照片输入](demo/电脑照片输入.jpg)
 - Display Mode (Local captured photo)
-![拍摄照片显示](demo\拍摄照片显示.jpg)
+![拍摄照片显示](demo/拍摄照片显示.jpg)
 - Display captured photo on computer
-![照片给电脑显示](demo\照片给电脑显示.jpg)
+![照片给电脑显示](demo/照片给电脑显示.jpg)
 
 Basic board: Nexys4 DDR
 
