@@ -1,5 +1,5 @@
 # FPGA-DigitalCamera
-Final Project for Digitial Logic, CS102109, Tongji University.
+Final Project for Digitial Logic (Fall 2021) , CS102109, Tongji University.
 
 Example Pictures:
 - Capture Mode
@@ -10,6 +10,12 @@ Example Pictures:
 ![拍摄照片显示](demo/拍摄照片显示.jpg)
 - Display captured photo on computer
 ![照片给电脑显示](demo/照片给电脑显示.jpg)
+
+Frame & RTL
+- frame design:
+![frame](demo/frame.png)
+- RTL design:
+![rtl](demo/rtl.png)
 
 Basic board: Nexys4 DDR
 
