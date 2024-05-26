@@ -1,6 +1,8 @@
 # FPGA-DigitalCamera
 Final Project for Digitial Logic (Fall 2021) , CS102109, Tongji University.
 
+注意！使用SD卡进行照片传输时必须先初始化SD卡，并通过项目自带的工具先将8张照片转换成bin文件，把bin文件复制到SD卡目录下，否则会导致照片无法正常读取或者无法利用满8个槽位的空间！
+
 Example Pictures:
 - Capture Mode
 ![拍摄模式](demo/拍摄模式.jpg)
@@ -39,8 +41,5 @@ Unsolved problems:
 - Camera zoom , bright & contrast control.
 
 Hope that someone who solved the problem can contact me or pull an issue. Thanks a lot :)
-
-2024.5.26更新:
-照片在电脑上写入SD卡/读取方式：需要先往SD卡中写入一个bin文件（因为只能写入未经压缩的照片），然后通过python脚本转换（印象里是600K一张文件，8个照片槽的地址是连续的，然后调用python的image包，脚本已经找不到了T T），对SD卡的读写操作都是通过这种方式进行
 
 Reference Repository: <a herf="https://github.com/lllbbbyyy/FPGA-OV2640">FPGA-OV2640 </a>
